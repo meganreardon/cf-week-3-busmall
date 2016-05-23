@@ -29,7 +29,8 @@ callCreateTheProducts();
 
 // put an image inside of the container
 
-theContainer.innerHTML = '<img src=' + theProducts[2].imgPath + ' />' + '<img src=' + theProducts[3].imgPath + ' />';
+// TURN ME BACK ON IF NEEDED
+// theContainer.innerHTML = '<img src=' + theProducts[2].imgPath + ' />' + '<img src=' + theProducts[3].imgPath + ' />';
 
 // create a random number
 
@@ -64,10 +65,18 @@ function randomImages() {
   theContainer.innerHTML = '<img src=' + theProducts[randomNumber].imgPath + ' />';
 };
 
-randomImages();
+// TURN ME BACK ON
+// randomImages();
 
 // var thElement = document.createElement('th');
 // thElement.textContent = Math.ceil(perDayTotal);
 // trElement.appendChild(thElement);
 
 // put a random image up on the page inside of theContainer
+
+// event handler
+theContainer.addEventListener('click', handleContainer);
+
+function handleContainer(event) {
+  console.log(event.target.id); // this will return which one you clicked on
+}
