@@ -1,10 +1,6 @@
 # cf-week-3-busmall
 A project for week 3 of the Code Fellows 201 class.
 
-# user stories will be here shortly
-
-the marketing research team, the developer, and the focus group participant who will be using the applicatio
-
 # Code Fellows, Week 3 project: Busmall
 
 ## As a Marketing Research Team I:
