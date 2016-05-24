@@ -5,6 +5,8 @@ var theImageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubbleg
 // global variables
 var theProducts = [];
 var userClicksTotal = 0;
+var upToTwentyFive = false;
+var randomNumber = 0;
 var theContainer = document.getElementById('thecontainer');
 
 // constructor
@@ -26,8 +28,6 @@ function callCreateTheProducts() {
 
 // creating the objects
 callCreateTheProducts();
-
-var randomNumber = 0;
 
 function makeMyRandomNumber() {
   var min = 0;
@@ -57,35 +57,33 @@ getThreeRandomNumbers();
 
 function randomImages() {
   getThreeRandomNumbers();
-  theContainer.innerHTML = '<img src=' + theProducts[randomOne].imgPath + ' /><img src=' + theProducts[randomTwo].imgPath + ' /><img src=' + theProducts[randomThree].imgPath + ' />';
+  theContainer.innerHTML = '<img src=' + theProducts[randomOne].imgPath + ' id= ' + randomOne + ' /><img src=' + theProducts[randomTwo].imgPath + ' id= ' + randomTwo + ' /><img src=' + theProducts[randomThree].imgPath + ' id= ' + randomThree + ' />';
+  theProducts[randomOne].timesDisplayed ++;
+  theProducts[randomTwo].timesDisplayed ++;
+  theProducts[randomThree].timesDisplayed ++;
 };
 
-// turned on for testing, otherwise will be inside the event handler function
-// randomImages();
+randomImages();
 
 // event handler
 theContainer.addEventListener('click', handleContainer);
 
-var upToTwentyFive = false;
-
 function handleContainer(event) {
   if (upToTwentyFive === false) {
-    console.log(event.target.id); // this will return which one you clicked on
-    // if click is on container total click cound i--
+    // console.log(event);
+    // console.log(event.target.id); // this will return which one you clicked on
     if (userClicksTotal === 24) {
-      console.log(userClicksTotal);
-      // this console logs 24 twice, why?
+      // this console logs the last click twice, which is why I've set it to 24
+      // not to self: figure out why
       upToTwentyFive = true;
     } else if (event.target.id === 'thecontainer') {
-      // alert('container!');
       userClicksTotal--;
-      console.log(userClicksTotal);
     } else {
       userClicksTotal++;
-      console.log(userClicksTotal);
+      console.log(event.target.id);
+      var thisid = parseInt(event.target.id);
+      theProducts[thisid].timesClicked ++;
     }
     randomImages();
   }
 }
-
-// write full event handler, call three new random images at bottom of it
