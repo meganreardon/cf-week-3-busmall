@@ -1,13 +1,14 @@
 // what we have to start with
 var theImageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'tentacle', 'unicorn', 'water-can', 'wine-glass'];
-// note: need to get the USB gif and sweep png back in there
 
 // global variables
 var theProducts = [];
+var eachProductClicks = [];
 var userClicksTotal = 0;
 var upToTwentyFive = false;
 var randomNumber = 0;
 var theContainer = document.getElementById('thecontainer');
+var theResults = document.getElementById('theresults'); // prob don't need this
 
 // constructor
 function BusMallDisplay(imgName) {
@@ -20,14 +21,13 @@ function BusMallDisplay(imgName) {
 };
 
 // creating the objects
-function callCreateTheProducts() {
+function createTheProducts() {
   for (var i = 0; i < theImageNames.length; i++) {
     var newone = new BusMallDisplay(theImageNames[i]);
   }
-};
+}
 
-// creating the objects
-callCreateTheProducts();
+createTheProducts();
 
 // random number makeMyRandomNumber
 function makeMyRandomNumber() {
@@ -67,18 +67,58 @@ theContainer.addEventListener('click', handleContainer);
 function handleContainer(event) {
   if (upToTwentyFive === false) {
     if (userClicksTotal === 24) {
+    // if (userClicksTotal === 24) {
       // set to 24 because it enters the loop one last time
       // note to self: fix this later
       upToTwentyFive = true;
+      // here we show the chart
+      fillEachProductClicks();
+      drawChart();
     } else if (event.target.id === 'thecontainer') {
       userClicksTotal--;
     } else {
       userClicksTotal++;
-      // console.log(userClicksTotal);
-      // console.log(event.target.id);
       var thisid = parseInt(event.target.id);
       theProducts[thisid].timesClicked ++;
     }
+    // TODO when I get to this point change if logic - if <= 25 then don't call to re-render images
     randomImages();
   }
+}
+
+// pulled this from class notes
+// data.datasets[0].data
+
+// this pushes the clicks per product into an array for the chart
+function fillEachProductClicks () {
+  for (var i = 0; i < theImageNames.length; i++) {
+    eachProductClicks.push(theProducts[i].timesClicked);
+  }
+}
+
+// fillEachProductClicks();
+
+var data = {
+  labels: theImageNames,
+  datasets: [
+    {
+      label: 'Times each product was clicked.',
+      // label: null,
+      backgroundColor: '#999999',
+      hoverBackgroundColor: '#ff6600',
+      data: eachProductClicks,
+    }
+  ]
+};
+
+function drawChart() {
+  var forMarketing = document.getElementById('theresults').getContext('2d');
+  clicksResultsChart = new Chart(forMarketing,{
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: false
+    }
+  });
+  chartDrawn = true;
 }

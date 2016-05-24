@@ -1,8 +1,19 @@
+* {
+  /*border: 1px solid orange;*/
+}
+
 img {
-  width: 200px;
+  width: 30%;
 }
 
 #thecontainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 100px;
+}
+
+#theresultscontainer {
   display: flex;
   align-items: center;
   justify-content: space-around;
