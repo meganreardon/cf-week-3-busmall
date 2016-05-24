@@ -75,6 +75,7 @@ function handleContainer(event) {
       // note to self: fix this later
       upToTwentyFive = true;
       // here we show the chart
+      fillEachProductClicks(); // this is here for testing for the moment
       drawChart();
     } else if (event.target.id === 'thecontainer') {
       userClicksTotal--;
@@ -84,7 +85,6 @@ function handleContainer(event) {
       // console.log(event.target.id);
       var thisid = parseInt(event.target.id);
       theProducts[thisid].timesClicked ++;
-      fillEachProductClicks(); // this is here for testing for the moment
     }
     // TODO when I get to this point change if logic - if <= 25 then don't call to re-render images
     randomImages();
@@ -99,7 +99,7 @@ function handleContainer(event) {
 //
 function fillEachProductClicks () {
   for (var i = 0; i < theImageNames.length; i++) {
-    console.log('can u c me?');
+    console.log(i + 'can u c me?');
     // var filler = 0;
     // filler = theProducts[i].timesClicked;
     // console.log('var filler is currently: ' + filler);
