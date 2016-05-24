@@ -50,13 +50,13 @@ function makeMyRandomNumber() {
 
 // get three different random numbers
 
-function threeRandomNumbers () {
-  // for loop to get three random numbers
-  // check to see if new random number is the same as any current random numbers
-  // these three numbers will make the three images
-};
-
-threeRandomNumbers();
+// function threeRandomNumbers () {
+//   // for loop to get three random numbers
+//   // check to see if new random number is the same as any current random numbers
+//   // these three numbers will make the three images
+// };
+//
+// threeRandomNumbers();
 
 function randomImages() {
   makeMyRandomNumber();
@@ -64,6 +64,28 @@ function randomImages() {
   // render a random image on the page
   theContainer.innerHTML = '<img src=' + theProducts[randomNumber].imgPath + ' />';
 };
+
+// loop
+function getThreeRandomNumbers () {
+  var randomOne = makeMyRandomNumber();
+  var randomTwo = makeMyRandomNumber();
+  while (randomTwo === randomOne) {
+    randomTwo = makeMyRandomNumber();
+  };
+  var randomThree = makeMyRandomNumber();
+  while ((randomThree === randomOne) || (randomThree === randomTwo)) {
+    randomThree = makeMyRandomNumber();
+  }
+  console.log(randomOne + ' : ' + randomTwo + ' : ' + randomThree);
+}
+
+getThreeRandomNumbers();
+
+  // make number
+  // if - first number then go against
+  // if - second number then check against fist number and go again -- if is same i--
+  // if - third number check against first and second, if is same i-- and go again
+  // check to see if number is equal
 
 // TURN ME BACK ON
 // randomImages();
@@ -80,3 +102,5 @@ theContainer.addEventListener('click', handleContainer);
 function handleContainer(event) {
   console.log(event.target.id); // this will return which one you clicked on
 }
+
+// write full event handler, call three new random images at bottom of it
