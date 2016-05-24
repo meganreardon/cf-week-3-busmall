@@ -105,11 +105,23 @@ function fillEachProductClicks () {
     // console.log('var filler is currently: ' + filler);
     // console.log(theProducts[i].timesClicked);
     // eachProductClicks.push(filler);
-    eachProductClicks.push(theProducts[i].timesClicked)
+    eachProductClicks.push(theProducts[i].timesClicked);
   }
 }
 
 // fillEachProductClicks();
+
+var data = {
+  labels: theImageNames,
+  datasets: [
+    {
+      label: 'This is text I cannot seem to turn off',
+      backgroundColor: '#999999',
+      hoverBackgroundColor: '#333333',
+      data: eachProductClicks,
+    }
+  ]
+};
 
 // all below here for chartjs part of this project
 // var data = {
@@ -123,20 +135,9 @@ function fillEachProductClicks () {
 //       // hoverBackgroundColor: [
 //       //   'red'
 //       // ]
+//       label: 'this is text'
 //     }]
 // };
-
-var barData = {
-	labels : theImageNames,
-	datasets : [
-		{
-			fillColor : "#48A497",
-			strokeColor : "#48A4D1",
-			data : eachProductClicks,
-		}
-
-	]
-}
 
 function drawChart() {
   var forMarketing = document.getElementById('theresults').getContext('2d');
