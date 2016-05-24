@@ -4,10 +4,12 @@ var theImageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubbleg
 
 // global variables
 var theProducts = [];
+var eachProductClicks = []; // this is a test array
 var userClicksTotal = 0;
 var upToTwentyFive = false;
 var randomNumber = 0;
 var theContainer = document.getElementById('thecontainer');
+var theResults = document.getElementById('theresults'); // prob don't need this
 
 // constructor
 function BusMallDisplay(imgName) {
@@ -20,6 +22,7 @@ function BusMallDisplay(imgName) {
 };
 
 // creating the objects
+// TODO rename this function, don't need call, can run right away
 function callCreateTheProducts() {
   for (var i = 0; i < theImageNames.length; i++) {
     var newone = new BusMallDisplay(theImageNames[i]);
@@ -66,10 +69,13 @@ theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
   if (upToTwentyFive === false) {
-    if (userClicksTotal === 24) {
+    if (userClicksTotal === 4) {
+    // if (userClicksTotal === 24) {
       // set to 24 because it enters the loop one last time
       // note to self: fix this later
       upToTwentyFive = true;
+      // here we show the chart
+      drawChart();
     } else if (event.target.id === 'thecontainer') {
       userClicksTotal--;
     } else {
@@ -78,7 +84,56 @@ function handleContainer(event) {
       // console.log(event.target.id);
       var thisid = parseInt(event.target.id);
       theProducts[thisid].timesClicked ++;
+      fillEachProductClicks(); // this is here for testing for the moment
     }
+    // TODO when I get to this point change if logic - if <= 25 then don't call to re-render images
     randomImages();
   }
+}
+
+// pulled this from class notes, need to use somewhere
+// data.datasets[0].data
+
+// make array of times clicked just for the chart
+// var eachProductClicks = [];
+//
+function fillEachProductClicks () {
+  for (var i = 0; i < theImageNames.length; i++) {
+    console.log('can u c me?');
+    // var filler = 0;
+    // filler = theProducts[i].timesClicked;
+    // console.log('var filler is currently: ' + filler);
+    // console.log(theProducts[i].timesClicked);
+    // eachProductClicks.push(filler);
+    eachProductClicks.push(theProducts[i].timesClicked)
+  }
+}
+
+// fillEachProductClicks();
+
+// all below here for chartjs part of this project
+var data = {
+  labels: theImageNames,
+  datasets: [
+    {
+      data: 1, // NEED TO PUT PUT ALL THE CLICKS HERE
+      backgroundColor: [
+        '#999999'
+      ],
+      hoverBackgroundColor: [
+        'red'
+      ]
+    }]
+};
+
+function drawChart() {
+  var ctx = document.getElementById('theresults').getContext('2d');
+  songChart = new Chart(ctx,{
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: false
+    }
+  });
+  chartDrawn = true;
 }

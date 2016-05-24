@@ -1,8 +1,14 @@
 img {
-  width: 200px;
+  width: 30%;
 }
 
 #thecontainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#theresultscontainer {
   display: flex;
   align-items: center;
   justify-content: space-around;
