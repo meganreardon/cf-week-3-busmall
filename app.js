@@ -1,10 +1,9 @@
 // what we have to start with
 var theImageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'tentacle', 'unicorn', 'water-can', 'wine-glass'];
-// note: need to get the USB gif and sweep png back in there
 
 // global variables
 var theProducts = [];
-var eachProductClicks = []; // this is a test array
+var eachProductClicks = [];
 var userClicksTotal = 0;
 var upToTwentyFive = false;
 var randomNumber = 0;
@@ -22,15 +21,13 @@ function BusMallDisplay(imgName) {
 };
 
 // creating the objects
-// TODO rename this function, don't need call, can run right away
-function callCreateTheProducts() {
+function createTheProducts() {
   for (var i = 0; i < theImageNames.length; i++) {
     var newone = new BusMallDisplay(theImageNames[i]);
   }
-};
+}
 
-// creating the objects
-callCreateTheProducts();
+createTheProducts();
 
 // random number makeMyRandomNumber
 function makeMyRandomNumber() {
@@ -69,20 +66,18 @@ theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
   if (upToTwentyFive === false) {
-    if (userClicksTotal === 2) {
+    if (userClicksTotal === 24) {
     // if (userClicksTotal === 24) {
       // set to 24 because it enters the loop one last time
       // note to self: fix this later
       upToTwentyFive = true;
       // here we show the chart
-      fillEachProductClicks(); // this is here for testing for the moment
+      fillEachProductClicks();
       drawChart();
     } else if (event.target.id === 'thecontainer') {
       userClicksTotal--;
     } else {
       userClicksTotal++;
-      // console.log(userClicksTotal);
-      // console.log(event.target.id);
       var thisid = parseInt(event.target.id);
       theProducts[thisid].timesClicked ++;
     }
@@ -91,20 +86,12 @@ function handleContainer(event) {
   }
 }
 
-// pulled this from class notes, need to use somewhere
+// pulled this from class notes
 // data.datasets[0].data
 
-// make array of times clicked just for the chart
-// var eachProductClicks = [];
-//
+// this pushes the clicks per product into an array for the chart
 function fillEachProductClicks () {
   for (var i = 0; i < theImageNames.length; i++) {
-    // console.log(i + 'can u c me?');
-    // var filler = 0;
-    // filler = theProducts[i].timesClicked;
-    // console.log('var filler is currently: ' + filler);
-    // console.log(theProducts[i].timesClicked);
-    // eachProductClicks.push(filler);
     eachProductClicks.push(theProducts[i].timesClicked);
   }
 }
@@ -115,33 +102,17 @@ var data = {
   labels: theImageNames,
   datasets: [
     {
-      label: 'This is text I cannot seem to turn off',
+      label: 'Times each product was clicked.',
+      // label: null,
       backgroundColor: '#999999',
-      hoverBackgroundColor: '#333333',
+      hoverBackgroundColor: '#ff6600',
       data: eachProductClicks,
     }
   ]
 };
 
-// all below here for chartjs part of this project
-// var data = {
-//   labels: theImageNames,
-//   datasets: [
-//     {
-//       data: eachProductClicks, // NEED TO PUT PUT ALL THE CLICKS HERE
-//       // backgroundColor: [
-//       //   '#999999'
-//       // ],
-//       // hoverBackgroundColor: [
-//       //   'red'
-//       // ]
-//       label: 'this is text'
-//     }]
-// };
-
 function drawChart() {
   var forMarketing = document.getElementById('theresults').getContext('2d');
-  // songChart = new Chart(ctx,{
   clicksResultsChart = new Chart(forMarketing,{
     type: 'bar',
     data: data,
