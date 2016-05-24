@@ -66,18 +66,26 @@ function randomImages() {
 // event handler
 theContainer.addEventListener('click', handleContainer);
 
+var upToTwentyFive = false;
+
 function handleContainer(event) {
-  console.log(event.target.id); // this will return which one you clicked on
-  // if click is on container total click cound i--
-  if (event.target.id === 'thecontainer') {
-    // alert('container!');
-    userClicksTotal--;
-    console.log(userClicksTotal);
-  } else {
-    userClicksTotal++;
-    console.log(userClicksTotal);
+  if (upToTwentyFive === false) {
+    console.log(event.target.id); // this will return which one you clicked on
+    // if click is on container total click cound i--
+    if (userClicksTotal === 24) {
+      console.log(userClicksTotal);
+      // this console logs 24 twice, why?
+      upToTwentyFive = true;
+    } else if (event.target.id === 'thecontainer') {
+      // alert('container!');
+      userClicksTotal--;
+      console.log(userClicksTotal);
+    } else {
+      userClicksTotal++;
+      console.log(userClicksTotal);
+    }
+    randomImages();
   }
-  randomImages();
 }
 
 // write full event handler, call three new random images at bottom of it
