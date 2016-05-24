@@ -69,7 +69,7 @@ theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
   if (upToTwentyFive === false) {
-    if (userClicksTotal === 4) {
+    if (userClicksTotal === 2) {
     // if (userClicksTotal === 24) {
       // set to 24 because it enters the loop one last time
       // note to self: fix this later
@@ -99,7 +99,7 @@ function handleContainer(event) {
 //
 function fillEachProductClicks () {
   for (var i = 0; i < theImageNames.length; i++) {
-    console.log(i + 'can u c me?');
+    // console.log(i + 'can u c me?');
     // var filler = 0;
     // filler = theProducts[i].timesClicked;
     // console.log('var filler is currently: ' + filler);
@@ -112,23 +112,36 @@ function fillEachProductClicks () {
 // fillEachProductClicks();
 
 // all below here for chartjs part of this project
-var data = {
-  labels: theImageNames,
-  datasets: [
-    {
-      data: 1, // NEED TO PUT PUT ALL THE CLICKS HERE
-      backgroundColor: [
-        '#999999'
-      ],
-      hoverBackgroundColor: [
-        'red'
-      ]
-    }]
-};
+// var data = {
+//   labels: theImageNames,
+//   datasets: [
+//     {
+//       data: eachProductClicks, // NEED TO PUT PUT ALL THE CLICKS HERE
+//       // backgroundColor: [
+//       //   '#999999'
+//       // ],
+//       // hoverBackgroundColor: [
+//       //   'red'
+//       // ]
+//     }]
+// };
+
+var barData = {
+	labels : theImageNames,
+	datasets : [
+		{
+			fillColor : "#48A497",
+			strokeColor : "#48A4D1",
+			data : eachProductClicks,
+		}
+
+	]
+}
 
 function drawChart() {
-  var ctx = document.getElementById('theresults').getContext('2d');
-  songChart = new Chart(ctx,{
+  var forMarketing = document.getElementById('theresults').getContext('2d');
+  // songChart = new Chart(ctx,{
+  clicksResultsChart = new Chart(forMarketing,{
     type: 'bar',
     data: data,
     options: {
