@@ -66,7 +66,7 @@ theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
   // if (userClicksTotal === 24) {
-  if (userClicksTotal === 4) {
+  if (userClicksTotal === 5) {
     theContainer.removeEventListener('click', handleContainer);
     fillEachProductClicks(); // this fills the timesClicked array used for the chart
     timesClickedToLS(); // this moves the timesClicked array into local storage
@@ -101,21 +101,25 @@ function timesClickedToLS() {
 }
 
 // TODO function here that pulls from local storage and moves the amounts from that array into the objects
-function timesClickedFromLS() {
-  // console.log('You have reached the timesClickedFromLS function. We are not here right now, please leave a message after the beep.');
-  fillEachProductClicks = JSON.parse(localStorage.getItem('stringifiedClicks')); // upon page load I am filling same array we push to later
-}
+// function timesClickedFromLS() {
+//   // console.log('You have reached the timesClickedFromLS function. We are not here right now, please leave a message after the beep.');
+// }
 
 // function to put stringifiedClicks[] into the objects
 // this will be our IFFE
 function refillEachProductClicks() {
+  retrievedTimesClicked = JSON.parse(localStorage.getItem('stringifiedClicks')); // upon page load I am filling same array we push to later
+  console.log(retrievedTimesClicked);
   for (var i = 0; i < theImageNames.length; i++) {
-    //eachProductClicks.push(theProducts[i].timesClicked);
-    theProducts[i].timesClicked = fillEachProductClicks(i);
-    console.log('theProducts[i] is ' + theProducts[i]);
-    console.log('fillEachProductClicks(i) is ' + fillEachProductClicks(i));
+    theProducts[i].timesClicked = retrievedTimesClicked[i];
+    console.log(theProducts[i].timesClicked);
+    // fillEachProductClicks(i) = theProducts[i].timesClicked;
+    // console.log('theProducts[i] is ' + theProducts[i]);
+    // console.log('fillEachProductClicks(i) is ' + fillEachProductClicks(i));
   }
 }
+
+refillEachProductClicks();
 
 var data = {
   labels: theImageNames,
@@ -145,10 +149,10 @@ function drawChart() {
 // test to a little local storage experiment
 
 /* start of working local storage code */
-var testArrayOfNumbers = [1, 2, 3, 42, 15, 16, 88, 55];
-localStorage.setItem('stringifiedTestArray', JSON.stringify(testArrayOfNumbers));
-var retrievedTestArray = JSON.parse(localStorage.getItem('stringifiedTestArray'));
-console.log('retrieved array is: ' + retrievedTestArray);
+// var testArrayOfNumbers = [1, 2, 3, 42, 15, 16, 88, 55];
+// localStorage.setItem('stringifiedTestArray', JSON.stringify(testArrayOfNumbers));
+// var retrievedTestArray = JSON.parse(localStorage.getItem('stringifiedTestArray'));
+// console.log('retrieved array is: ' + retrievedTestArray);
 /* end of working local storage code */
 
 // when load page load clicks array w/ the data pulled out of local storage
