@@ -116,3 +116,17 @@ function drawChart() {
   });
   chartDrawn = true;
 }
+
+// test to a little local storage experiment
+
+var testArrayOfNumbers = [1, 2, 3, 42, 15, 16, 88];
+
+localStorage.setItem('stringifiedTestArray', JSON.stringify(testArrayOfNumbers));
+
+var retrievedTestArray = JSON.parse(localStorage.getItem(testArrayOfNumbers));
+
+console.log('test array is: ' + testArrayOfNumbers);
+
+// set up local storage clear button
+
+// localStorage.clear;
