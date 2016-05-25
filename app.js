@@ -96,26 +96,17 @@ function fillEachProductClicks () {
 
 // function here to put the timesClicked[] into LS
 function timesClickedToLS() {
-  // console.log('You have reached the timesClickedToLS function. We are not here right now, please leave a message after the beep.');
   localStorage.setItem('stringifiedClicks', JSON.stringify(eachProductClicks));
 }
-
-// TODO function here that pulls from local storage and moves the amounts from that array into the objects
-// function timesClickedFromLS() {
-//   // console.log('You have reached the timesClickedFromLS function. We are not here right now, please leave a message after the beep.');
-// }
 
 // function to put stringifiedClicks[] into the objects
 // this will be our IFFE
 function refillEachProductClicks() {
-  retrievedTimesClicked = JSON.parse(localStorage.getItem('stringifiedClicks')); // upon page load I am filling same array we push to later
+  retrievedTimesClicked = JSON.parse(localStorage.getItem('stringifiedClicks'));
   console.log(retrievedTimesClicked);
   for (var i = 0; i < theImageNames.length; i++) {
     theProducts[i].timesClicked = retrievedTimesClicked[i];
     console.log(theProducts[i].timesClicked);
-    // fillEachProductClicks(i) = theProducts[i].timesClicked;
-    // console.log('theProducts[i] is ' + theProducts[i]);
-    // console.log('fillEachProductClicks(i) is ' + fillEachProductClicks(i));
   }
 }
 
@@ -126,7 +117,6 @@ var data = {
   datasets: [
     {
       label: 'Times each product was clicked.',
-      // label: null,
       backgroundColor: '#999999',
       hoverBackgroundColor: '#ff6600',
       data: eachProductClicks,
@@ -145,15 +135,3 @@ function drawChart() {
   });
   chartDrawn = true;
 }
-
-// test to a little local storage experiment
-
-/* start of working local storage code */
-// var testArrayOfNumbers = [1, 2, 3, 42, 15, 16, 88, 55];
-// localStorage.setItem('stringifiedTestArray', JSON.stringify(testArrayOfNumbers));
-// var retrievedTestArray = JSON.parse(localStorage.getItem('stringifiedTestArray'));
-// console.log('retrieved array is: ' + retrievedTestArray);
-/* end of working local storage code */
-
-// when load page load clicks array w/ the data pulled out of local storage
-// when get to render part of handler function take current clicks array and put into local storage
