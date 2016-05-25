@@ -82,6 +82,8 @@ function handleContainer(event) {
       theProducts[thisid].timesClicked ++;
     }
     // TODO when I get to this point change if logic - if <= 25 then don't call to re-render images
+    // step one: collapse images div
+    // step two: render table - hopefully where images div has just diappeared
     randomImages();
   }
 }
