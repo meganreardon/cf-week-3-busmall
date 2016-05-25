@@ -65,9 +65,12 @@ randomImages();
 theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
-  if (userClicksTotal === 24) {
+  // if (userClicksTotal === 24) {
+  if (userClicksTotal === 4) {
     theContainer.removeEventListener('click', handleContainer);
-    fillEachProductClicks();
+    fillEachProductClicks(); // this fills the timesClicked array used for the chart
+    timesClickedToLS(); // this moves the timesClicked array into local storage
+    console.log(eachProductClicks);
     drawChart();
   } else if (event.target.id === 'thecontainer') {
     // console.log('not an image');
@@ -75,13 +78,14 @@ function handleContainer(event) {
     userClicksTotal++;
     var thisid = parseInt(event.target.id);
     theProducts[thisid].timesClicked ++;
-    // console.log(userClicksTotal);
     randomImages();
   }
 }
 
 // pulled this from class notes
 // data.datasets[0].data
+// also: Sam suggested IFFE instead of any window events
+// if no local storage run page
 
 // this pushes the clicks per product into an array for the chart
 function fillEachProductClicks () {
@@ -90,7 +94,28 @@ function fillEachProductClicks () {
   }
 }
 
-// fillEachProductClicks();
+// function here to put the timesClicked[] into LS
+function timesClickedToLS() {
+  // console.log('You have reached the timesClickedToLS function. We are not here right now, please leave a message after the beep.');
+  localStorage.setItem('stringifiedClicks', JSON.stringify(eachProductClicks));
+}
+
+// TODO function here that pulls from local storage and moves the amounts from that array into the objects
+function timesClickedFromLS() {
+  // console.log('You have reached the timesClickedFromLS function. We are not here right now, please leave a message after the beep.');
+  fillEachProductClicks = JSON.parse(localStorage.getItem('stringifiedClicks')); // upon page load I am filling same array we push to later
+}
+
+// function to put stringifiedClicks[] into the objects
+// this will be our IFFE
+function refillEachProductClicks() {
+  for (var i = 0; i < theImageNames.length; i++) {
+    //eachProductClicks.push(theProducts[i].timesClicked);
+    theProducts[i].timesClicked = fillEachProductClicks(i);
+    console.log('theProducts[i] is ' + theProducts[i]);
+    console.log('fillEachProductClicks(i) is ' + fillEachProductClicks(i));
+  }
+}
 
 var data = {
   labels: theImageNames,
@@ -119,67 +144,12 @@ function drawChart() {
 
 // test to a little local storage experiment
 
+/* start of working local storage code */
 var testArrayOfNumbers = [1, 2, 3, 42, 15, 16, 88, 55];
 localStorage.setItem('stringifiedTestArray', JSON.stringify(testArrayOfNumbers));
-var retrievedTestArray = JSON.parse(localStorage.getItem(testArrayOfNumbers));
-console.log('test array is: ' + testArrayOfNumbers);
+var retrievedTestArray = JSON.parse(localStorage.getItem('stringifiedTestArray'));
+console.log('retrieved array is: ' + retrievedTestArray);
+/* end of working local storage code */
 
-// set up local storage clear button
-
-// localStorage.clear;
-
-// if (localStorage.testArrayOfNumbers) { alert('its a match'); };
-//
-// if (!localStorage.testArrayOfNumbers) { alert('nada null nothing dust'); }
-//
-// if (localStorage(testArrayOfNumbers)) { alert('testing the test'); }
-
-// if (localStorage.getItem(testArrayOfNumbers) == true) {alert('there');}
-// if (localStorage.getItem(testArrayOfNumbers) == false) {alert('not there');}
-
-// someVariable = (localStorage['testArrayOfNumbers'] == 'true');
-//
-// if (!someVariable) {
-//   // return false;
-//   alert('false');
-// } else {
-//   // return true;
-//   alert('true');
-// };
-
-// localStorage.clear();
-//
-// if (!'stringifiedTestArray') {
-//   console.log('it is not there');
-// } else {
-//   console.log('it is there');
-// }
-
-// function canUCMe () {
-//   someVariable = (localStorage['stringifiedTestArray'] == 'true');
-//   if (!someVariable) {
-//     alert('NADA');
-//   } else {
-//     alert('i see seomthing');
-//   }
-// }
-//
-// canUCMe();
-//
-// function resumeGame() {
-//   if (!supportsLocalStorage()) { return false; }
-//   gGameInProgress = (localStorage['halma.game.in.progress'] == 'true');
-//   if (!gGameInProgress) { return false; }
-//   gPieces = new Array(kNumPieces);
-//   for (var i = 0; i < kNumPieces; i++) {
-//     var row = parseInt(localStorage['halma.piece.' + i + '.row']);
-//     var column = parseInt(localStorage['halma.piece.' + i + '.column']);
-//     gPieces[i] = new Cell(row, column);
-//   }
-//   gNumPieces = kNumPieces;
-//   gSelectedPieceIndex = parseInt(localStorage['halma.selectedpiece']);
-//   gSelectedPieceHasMoved = localStorage['halma.selectedpiecehasmoved'] == 'true';
-//   gMoveCount = parseInt(localStorage['halma.movecount']);
-//   drawBoard();
-//   return true;
-// }
+// when load page load clicks array w/ the data pulled out of local storage
+// when get to render part of handler function take current clicks array and put into local storage
