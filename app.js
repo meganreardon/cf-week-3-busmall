@@ -119,14 +119,67 @@ function drawChart() {
 
 // test to a little local storage experiment
 
-var testArrayOfNumbers = [1, 2, 3, 42, 15, 16, 88];
-
+var testArrayOfNumbers = [1, 2, 3, 42, 15, 16, 88, 55];
 localStorage.setItem('stringifiedTestArray', JSON.stringify(testArrayOfNumbers));
-
 var retrievedTestArray = JSON.parse(localStorage.getItem(testArrayOfNumbers));
-
 console.log('test array is: ' + testArrayOfNumbers);
 
 // set up local storage clear button
 
 // localStorage.clear;
+
+// if (localStorage.testArrayOfNumbers) { alert('its a match'); };
+//
+// if (!localStorage.testArrayOfNumbers) { alert('nada null nothing dust'); }
+//
+// if (localStorage(testArrayOfNumbers)) { alert('testing the test'); }
+
+// if (localStorage.getItem(testArrayOfNumbers) == true) {alert('there');}
+// if (localStorage.getItem(testArrayOfNumbers) == false) {alert('not there');}
+
+// someVariable = (localStorage['testArrayOfNumbers'] == 'true');
+//
+// if (!someVariable) {
+//   // return false;
+//   alert('false');
+// } else {
+//   // return true;
+//   alert('true');
+// };
+
+// localStorage.clear();
+//
+// if (!'stringifiedTestArray') {
+//   console.log('it is not there');
+// } else {
+//   console.log('it is there');
+// }
+
+// function canUCMe () {
+//   someVariable = (localStorage['stringifiedTestArray'] == 'true');
+//   if (!someVariable) {
+//     alert('NADA');
+//   } else {
+//     alert('i see seomthing');
+//   }
+// }
+//
+// canUCMe();
+//
+// function resumeGame() {
+//   if (!supportsLocalStorage()) { return false; }
+//   gGameInProgress = (localStorage['halma.game.in.progress'] == 'true');
+//   if (!gGameInProgress) { return false; }
+//   gPieces = new Array(kNumPieces);
+//   for (var i = 0; i < kNumPieces; i++) {
+//     var row = parseInt(localStorage['halma.piece.' + i + '.row']);
+//     var column = parseInt(localStorage['halma.piece.' + i + '.column']);
+//     gPieces[i] = new Cell(row, column);
+//   }
+//   gNumPieces = kNumPieces;
+//   gSelectedPieceIndex = parseInt(localStorage['halma.selectedpiece']);
+//   gSelectedPieceHasMoved = localStorage['halma.selectedpiecehasmoved'] == 'true';
+//   gMoveCount = parseInt(localStorage['halma.movecount']);
+//   drawBoard();
+//   return true;
+// }
