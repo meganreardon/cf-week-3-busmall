@@ -65,25 +65,17 @@ randomImages();
 theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
-  if (upToTwentyFive === false) {
-    if (userClicksTotal === 24) {
-    // if (userClicksTotal === 24) {
-      // set to 24 because it enters the loop one last time
-      // note to self: fix this later
-      upToTwentyFive = true;
-      // here we show the chart
-      fillEachProductClicks();
-      drawChart();
-    } else if (event.target.id === 'thecontainer') {
-      userClicksTotal--;
-    } else {
-      userClicksTotal++;
-      var thisid = parseInt(event.target.id);
-      theProducts[thisid].timesClicked ++;
-    }
-    // TODO when I get to this point change if logic - if <= 25 then don't call to re-render images
-    // step one: collapse images div
-    // step two: render table - hopefully where images div has just diappeared
+  if (userClicksTotal === 24) {
+    theContainer.removeEventListener('click', handleContainer);
+    fillEachProductClicks();
+    drawChart();
+  } else if (event.target.id === 'thecontainer') {
+    // console.log('not an image');
+  } else {
+    userClicksTotal++;
+    var thisid = parseInt(event.target.id);
+    theProducts[thisid].timesClicked ++;
+    // console.log(userClicksTotal);
     randomImages();
   }
 }
