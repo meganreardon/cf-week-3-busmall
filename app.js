@@ -57,7 +57,9 @@ function randomImages() {
   theProducts[randomOne].timesDisplayed ++;
   theProducts[randomTwo].timesDisplayed ++;
   theProducts[randomThree].timesDisplayed ++;
-  // fillEachProductDisplays();
+  // empty out array before filling it again
+  eachProductDisplays = [];
+  fillEachProductDisplays();
 };
 
 randomImages();
@@ -72,7 +74,7 @@ function handleContainer(event) {
     theContainer.removeEventListener('click', handleContainer);
     // fillEachProductClicks(); // this fills the timesClicked array used for the chart
     // timesClickedToLS(); // this moves the timesClicked array into local storage
-    console.log(eachProductClicks);
+    // console.log(eachProductClicks);
     drawChart();
   } else if (event.target.id === 'thecontainer') {
     // console.log('not an image');
@@ -104,11 +106,14 @@ function fillEachProductClicks () {
 }
 
 // turn this back on
-// function fillEachProductDisplays () {
-//   for (var i = 0; i < theImageNames.length; i++) {
-//     eachProductDisplays.push(theProducts[i].timesDisplayed);
-//   }
-// }
+function fillEachProductDisplays () {
+  // console.log('reach fill displays function');
+  for (var i = 0; i < theImageNames.length; i++) {
+    // console.log('i is ' + i);
+    // console.log('times displayed i is ' + theProducts[i].timesDisplayed);
+    eachProductDisplays.push(theProducts[i].timesDisplayed);
+  }
+}
 
 // function here to put the timesClicked[] into LS
 function timesClickedToLS() {
@@ -116,9 +121,12 @@ function timesClickedToLS() {
 }
 
 // function here to put the timesDisplayed[] into LS
-// function timesDisplayedToLS () {
-//   localStorage.setItem('stringifiedDisplays', JSON.stringify(eachProductDisplays));
-// }
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+// MAKE ME WORK DARNIT
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+function timesDisplayedToLS () {
+  localStorage.setItem('stringifiedDisplays', JSON.stringify(eachProductDisplays));
+}
 
 // function to put stringifiedClicks[] into the objects
 // this will be our IFFE
@@ -130,7 +138,7 @@ function refillEachProductClicks() {
       // do
       for (var i = 0; i < theImageNames.length; i++) {
         theProducts[i].timesClicked = retrievedTimesClicked[i];
-        console.log(theProducts[i].timesClicked);
+        // console.log(theProducts[i].timesClicked);
       }
     }
   }
