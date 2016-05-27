@@ -57,9 +57,8 @@ function randomImages() {
   theProducts[randomOne].timesDisplayed ++;
   theProducts[randomTwo].timesDisplayed ++;
   theProducts[randomThree].timesDisplayed ++;
-  // empty out array before filling it again
-  eachProductDisplays = [];
   fillEachProductDisplays();
+  timesDisplayedToLS (); // moves times displayed into local storage
 };
 
 randomImages();
@@ -84,7 +83,6 @@ function handleContainer(event) {
     theProducts[thisid].timesClicked ++;
     fillEachProductClicks(); // this fills the timesClicked array used for the chart
     timesClickedToLS(); // this moves the timesClicked array into local storage
-    eachProductClicks = []; // empties out array after I've filled what needs to be filled
     randomImages();
   }
 }
@@ -98,6 +96,7 @@ function handleContainer(event) {
 // this pushes the clicks per product into an array for the chart
 function fillEachProductClicks () {
   // empty out array works here too
+  eachProductClicks = []; // empties out array after I've filled what needs to be filled
   for (var i = 0; i < theImageNames.length; i++) {
     eachProductClicks.push(theProducts[i].timesClicked);
     // the below writes to local storage each time user clicks
@@ -107,11 +106,13 @@ function fillEachProductClicks () {
 
 // turn this back on
 function fillEachProductDisplays () {
+  eachProductDisplays = []; // empty out before filling again
   // console.log('reach fill displays function');
   for (var i = 0; i < theImageNames.length; i++) {
     // console.log('i is ' + i);
     // console.log('times displayed i is ' + theProducts[i].timesDisplayed);
     eachProductDisplays.push(theProducts[i].timesDisplayed);
+    // console.log('eachProductDisplays array is ' + eachProductDisplays);
   }
 }
 
@@ -145,19 +146,20 @@ function refillEachProductClicks() {
 }
 
 // FIX ME
-// function refillEachProductDisplays() {
-//   if (localStorage) {
-//     retrievedTimesDisplayed = JSON.parse(localStorage.getItem('stringifiedDisplays'));
-//     console.log(retrievedTimesDisplayed);
-//     for (var i = 0; i < theImageNames.length; i++) {
-//       theProducts[i].timesDisplayed = retrievedTimesDisplayed[i];
-//       console.log(theProducts[i].timesDisplayed);
-//     }
-//   }
-// }
+function refillEachProductDisplays() {
+  if (localStorage) {
+    retrievedTimesDisplayed = JSON.parse(localStorage.getItem('stringifiedDisplays'));
+    // console.log(retrievedTimesDisplayed);
+    for (var i = 0; i < theImageNames.length; i++) {
+      theProducts[i].timesDisplayed = retrievedTimesDisplayed[i];
+      console.log(theProducts[i].timesDisplayed);
+    }
+  }
+}
 
 // TODO turn me back on and turn me into an IFFE
 refillEachProductClicks();
+refillEachProductDisplays();
 // refillEachProductDisplays();
 
 var data = {
