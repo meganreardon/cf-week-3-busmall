@@ -59,6 +59,7 @@ function getThreeRandomNumbers () {
 
 // render three images and add to times displayed
 function randomImages() {
+  eachProductDisplays = []; // empty out before filling again
   getThreeRandomNumbers();
   theContainer.innerHTML = '<img src=' + theProducts[randomOne].imgPath + ' id=' + randomOne + ' /><img src=' + theProducts[randomTwo].imgPath + ' id=' + randomTwo + ' /><img src=' + theProducts[randomThree].imgPath + ' id=' + randomThree + ' />';
   theProducts[randomOne].timesDisplayed ++;
