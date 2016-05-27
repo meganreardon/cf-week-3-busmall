@@ -1,7 +1,5 @@
-// what we have to start with
 var theImageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'tentacle', 'unicorn', 'water-can', 'wine-glass'];
 
-// global variables
 var theProducts = [];
 var eachProductClicks = [];
 var eachProductDisplays = [];
@@ -10,17 +8,14 @@ var upToTwentyFive = false;
 var randomNumber = 0;
 var theContainer = document.getElementById('thecontainer');
 
-// constructor
 function BusMallDisplay(imgName) {
   this.imgName = imgName;
-  // nadia points out that this string below might now work, might need to split string above instead
   this.imgPath = 'images/' + imgName + '.jpg';
   this.timesDisplayed = 0;
   this.timesClicked = 0;
   theProducts.push(this);
-};
+}
 
-// creating the objects
 function createTheProducts() {
   for (var i = 0; i < theImageNames.length; i++) {
     var newone = new BusMallDisplay(theImageNames[i]);
@@ -29,7 +24,6 @@ function createTheProducts() {
 
 createTheProducts();
 
-// random number makeMyRandomNumber
 function makeMyRandomNumber() {
   var min = 0;
   var max = theProducts.length - 1;
@@ -37,7 +31,6 @@ function makeMyRandomNumber() {
   return randomNumber;
 }
 
-// get three random numbers
 function getThreeRandomNumbers () {
   randomOne = makeMyRandomNumber();
   randomTwo = makeMyRandomNumber();
@@ -52,31 +45,26 @@ function getThreeRandomNumbers () {
 
 // render three images and add to times displayed
 function randomImages() {
+  // eachProductDisplays = []; // empty out before filling again
   getThreeRandomNumbers();
   theContainer.innerHTML = '<img src=' + theProducts[randomOne].imgPath + ' id=' + randomOne + ' /><img src=' + theProducts[randomTwo].imgPath + ' id=' + randomTwo + ' /><img src=' + theProducts[randomThree].imgPath + ' id=' + randomThree + ' />';
   theProducts[randomOne].timesDisplayed ++;
   theProducts[randomTwo].timesDisplayed ++;
   theProducts[randomThree].timesDisplayed ++;
   fillEachProductDisplays();
-  timesDisplayedToLS (); // moves times displayed into local storage
-};
+  timesDisplayedToLS(); // moves times displayed into local storage
+}
 
 randomImages();
 
 // event handler
 theContainer.addEventListener('click', handleContainer);
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
 function handleContainer(event) {
   if (userClicksTotal === 2) {
     theContainer.removeEventListener('click', handleContainer);
-    // fillEachProductClicks(); // this fills the timesClicked array used for the chart
-    // timesClickedToLS(); // this moves the timesClicked array into local storage
-    // console.log(eachProductClicks);
     drawChart();
   } else if (event.target.id === 'thecontainer') {
-    // console.log('not an image');
   } else {
     userClicksTotal++;
     var thisid = parseInt(event.target.id);
@@ -84,84 +72,59 @@ function handleContainer(event) {
     fillEachProductClicks(); // this fills the timesClicked array used for the chart
     timesClickedToLS(); // this moves the timesClicked array into local storage
     randomImages();
+    eachProductClicks = []; // empties out array after I've filled what needs to be filled
   }
 }
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-
-// pulled this from class notes
-// data.datasets[0].data
-// also: Sam suggested IFFE instead of any window events
-
-// this pushes the clicks per product into an array for the chart
+// pushes the clicks/displays per product into array for the chart/local storage
 function fillEachProductClicks () {
-  // empty out array works here too
-  eachProductClicks = []; // empties out array after I've filled what needs to be filled
   for (var i = 0; i < theImageNames.length; i++) {
     eachProductClicks.push(theProducts[i].timesClicked);
-    // the below writes to local storage each time user clicks
-    // localStorage.setItem('stringifiedClicks', JSON.stringify(eachProductClicks));
   }
 }
 
-// turn this back on
 function fillEachProductDisplays () {
-  eachProductDisplays = []; // empty out before filling again
-  // console.log('reach fill displays function');
   for (var i = 0; i < theImageNames.length; i++) {
-    // console.log('i is ' + i);
-    // console.log('times displayed i is ' + theProducts[i].timesDisplayed);
     eachProductDisplays.push(theProducts[i].timesDisplayed);
-    // console.log('eachProductDisplays array is ' + eachProductDisplays);
   }
 }
 
-// function here to put the timesClicked[] into LS
+// puts times clicked/displayed into local storage
 function timesClickedToLS() {
   localStorage.setItem('stringifiedClicks', JSON.stringify(eachProductClicks));
 }
 
-// function here to put the timesDisplayed[] into LS
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-// MAKE ME WORK DARNIT
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 function timesDisplayedToLS () {
   localStorage.setItem('stringifiedDisplays', JSON.stringify(eachProductDisplays));
 }
 
-// function to put stringifiedClicks[] into the objects
-// this will be our IFFE
+// refills object properties from local storage
 function refillEachProductClicks() {
   if (localStorage) {
     retrievedTimesClicked = JSON.parse(localStorage.getItem('stringifiedClicks'));
-    // console.log(retrievedTimesClicked);
     if (retrievedTimesClicked !== null) {
-      // do
       for (var i = 0; i < theImageNames.length; i++) {
         theProducts[i].timesClicked = retrievedTimesClicked[i];
-        // console.log(theProducts[i].timesClicked);
       }
     }
   }
 }
 
-// FIX ME
 function refillEachProductDisplays() {
   if (localStorage) {
     retrievedTimesDisplayed = JSON.parse(localStorage.getItem('stringifiedDisplays'));
-    // console.log(retrievedTimesDisplayed);
-    for (var i = 0; i < theImageNames.length; i++) {
-      theProducts[i].timesDisplayed = retrievedTimesDisplayed[i];
-      console.log(theProducts[i].timesDisplayed);
+    if (retrievedTimesDisplayed !== null) {
+      for (var i = 0; i < theImageNames.length; i++) {
+        theProducts[i].timesDisplayed = retrievedTimesDisplayed[i];
+      }
     }
   }
 }
 
-// TODO turn me back on and turn me into an IFFE
 refillEachProductClicks();
 refillEachProductDisplays();
-// refillEachProductDisplays();
 
+// chart rendering below
 var data = {
   labels: theImageNames,
   datasets: [
@@ -169,7 +132,7 @@ var data = {
       label: 'Times each product was clicked.',
       backgroundColor: '#999999',
       hoverBackgroundColor: '#ff6600',
-      data: eachProductClicks, // can I put a function call here?
+      data: eachProductClicks,
     }
   ]
 };
