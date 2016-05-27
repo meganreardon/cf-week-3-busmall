@@ -1,4 +1,4 @@
-# Code Fellows, Week 3 project: Busmall
+# Code Fellows, Week 3 project: Bus Mall
 
 As a Marketing Research Team I:
 - Would like a reachable database of how many times an image is clicked to determine it's popularity.
@@ -15,5 +15,5 @@ As a Focus Group Participant I:
 As a Developer I:
 - Would like to use my newly acquired, if still shaky, power of buiding an object constructor to control and create an images array.
 - Would like to use my newly acquired, if still shaky, power of adding an event handler to the page.
-- Will use efficient code to get the number of clicks and add them to the object ____ in question.
+- Will use efficient code to get the number of clicks and add them to the object property in question.
 - Will be able to quickly access my arrays to display the result of the data to the user and the marketing team.
