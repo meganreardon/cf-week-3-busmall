@@ -4,6 +4,7 @@ var theImageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubbleg
 var theProducts = [];
 var eachProductClicks = [];
 var eachProductDisplays = [];
+var productPopularity = [];
 var userClicksTotal = 0;
 var upToTwentyFive = false;
 var randomNumber = 0;
@@ -25,15 +26,13 @@ function createTheProducts() {
 
 createTheProducts();
 
-// IIFE
-var refillingDisplays = (function() {
+// fills the timesDislayed properties from local storage when page loads
+var refillEachProductDisplays = (function() {
   if (localStorage) {
     retrievedTimesDisplayed = JSON.parse(localStorage.getItem('stringifiedDisplays'));
-    console.log('just grabbed this from LS: ' + retrievedTimesDisplayed);
     if (retrievedTimesDisplayed !== null) {
       for (var i = 0; i < theImageNames.length; i++) {
         theProducts[i].timesDisplayed = retrievedTimesDisplayed[i];
-        // console.log('i am refilling the objects:' + theProducts[i].timesDisplayed);
       }
     }
   }
@@ -60,7 +59,6 @@ function getThreeRandomNumbers () {
 
 // render three images and add to times displayed
 function randomImages() {
-  // eachProductDisplays = []; // empty out before filling again
   getThreeRandomNumbers();
   theContainer.innerHTML = '<img src=' + theProducts[randomOne].imgPath + ' id=' + randomOne + ' /><img src=' + theProducts[randomTwo].imgPath + ' id=' + randomTwo + ' /><img src=' + theProducts[randomThree].imgPath + ' id=' + randomThree + ' />';
   theProducts[randomOne].timesDisplayed ++;
@@ -76,7 +74,7 @@ randomImages();
 theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
-  if (userClicksTotal === 2) {
+  if (userClicksTotal === 24) {
     theContainer.removeEventListener('click', handleContainer);
     drawChart();
   } else if (event.target.id === 'thecontainer') {
@@ -84,8 +82,8 @@ function handleContainer(event) {
     userClicksTotal++;
     var thisid = parseInt(event.target.id);
     theProducts[thisid].timesClicked ++;
-    fillEachProductClicks(); // this fills the timesClicked array used for the chart
-    timesClickedToLS(); // this moves the timesClicked array into local storage
+    fillEachProductClicks(); // fills the timesClicked array used for the chart
+    timesClickedToLS(); // moves the timesClicked array into local storage
     randomImages();
     eachProductClicks = []; // empties out array after I've filled what needs to be filled
   }
@@ -101,9 +99,7 @@ function fillEachProductClicks () {
 function fillEachProductDisplays () {
   for (var i = 0; i < theImageNames.length; i++) {
     eachProductDisplays.push(theProducts[i].timesDisplayed);
-    // console.log('inside filling the objects, is: ' + theProducts[i].timesDisplayed);
   }
-  console.log('here is the array I just made: ' + eachProductDisplays);
 }
 
 // puts times clicked/displayed into local storage
@@ -113,10 +109,9 @@ function timesClickedToLS() {
 
 function timesDisplayedToLS () {
   localStorage.setItem('stringifiedDisplays', JSON.stringify(eachProductDisplays));
-  console.log('just pushed this to local storage: ' + eachProductDisplays);
 }
 
-// refills object properties from local storage
+// refills timesClicked properties from local storage
 function refillEachProductClicks() {
   if (localStorage) {
     retrievedTimesClicked = JSON.parse(localStorage.getItem('stringifiedClicks'));
@@ -128,22 +123,18 @@ function refillEachProductClicks() {
   }
 }
 
-// IIFE
-// var refillingDisplays = (function refillEachProductDisplays() {
-//   if (localStorage) {
-//     retrievedTimesDisplayed = JSON.parse(localStorage.getItem('stringifiedDisplays'));
-//     console.log('just grabbed this from LS: ' + retrievedTimesDisplayed);
-//     if (retrievedTimesDisplayed !== null) {
-//       for (var i = 0; i < theImageNames.length; i++) {
-//         theProducts[i].timesDisplayed = retrievedTimesDisplayed[i];
-//         // console.log('i am refilling the objects:' + theProducts[i].timesDisplayed);
-//       }
-//     }
-//   }
-// }());
-
 refillEachProductClicks();
-// refillEachProductDisplays();
+
+// function to calculate times clicked divided by times displayed
+// note: not used on page but was part of the assignment
+function calcProductPopulaity() {
+  for (var i = 0; i < theImageNames.length; i++) {
+    var popularity = Math.round((theProducts[i].timesClicked / theProducts[i].timesDisplayed) * 10 ) / 10;
+    productPopularity.push(popularity);
+  }
+}
+
+calcProductPopulaity();
 
 // chart rendering below
 var data = {
