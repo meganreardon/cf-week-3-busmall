@@ -1,3 +1,4 @@
+
 var theImageNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'tentacle', 'unicorn', 'water-can', 'wine-glass'];
 
 var theProducts = [];
@@ -23,6 +24,20 @@ function createTheProducts() {
 }
 
 createTheProducts();
+
+// IIFE
+var refillingDisplays = (function() {
+  if (localStorage) {
+    retrievedTimesDisplayed = JSON.parse(localStorage.getItem('stringifiedDisplays'));
+    console.log('just grabbed this from LS: ' + retrievedTimesDisplayed);
+    if (retrievedTimesDisplayed !== null) {
+      for (var i = 0; i < theImageNames.length; i++) {
+        theProducts[i].timesDisplayed = retrievedTimesDisplayed[i];
+        // console.log('i am refilling the objects:' + theProducts[i].timesDisplayed);
+      }
+    }
+  }
+}());
 
 function makeMyRandomNumber() {
   var min = 0;
@@ -86,7 +101,9 @@ function fillEachProductClicks () {
 function fillEachProductDisplays () {
   for (var i = 0; i < theImageNames.length; i++) {
     eachProductDisplays.push(theProducts[i].timesDisplayed);
+    // console.log('inside filling the objects, is: ' + theProducts[i].timesDisplayed);
   }
+  console.log('here is the array I just made: ' + eachProductDisplays);
 }
 
 // puts times clicked/displayed into local storage
@@ -96,6 +113,7 @@ function timesClickedToLS() {
 
 function timesDisplayedToLS () {
   localStorage.setItem('stringifiedDisplays', JSON.stringify(eachProductDisplays));
+  console.log('just pushed this to local storage: ' + eachProductDisplays);
 }
 
 // refills object properties from local storage
@@ -110,19 +128,22 @@ function refillEachProductClicks() {
   }
 }
 
-function refillEachProductDisplays() {
-  if (localStorage) {
-    retrievedTimesDisplayed = JSON.parse(localStorage.getItem('stringifiedDisplays'));
-    if (retrievedTimesDisplayed !== null) {
-      for (var i = 0; i < theImageNames.length; i++) {
-        theProducts[i].timesDisplayed = retrievedTimesDisplayed[i];
-      }
-    }
-  }
-}
+// IIFE
+// var refillingDisplays = (function refillEachProductDisplays() {
+//   if (localStorage) {
+//     retrievedTimesDisplayed = JSON.parse(localStorage.getItem('stringifiedDisplays'));
+//     console.log('just grabbed this from LS: ' + retrievedTimesDisplayed);
+//     if (retrievedTimesDisplayed !== null) {
+//       for (var i = 0; i < theImageNames.length; i++) {
+//         theProducts[i].timesDisplayed = retrievedTimesDisplayed[i];
+//         // console.log('i am refilling the objects:' + theProducts[i].timesDisplayed);
+//       }
+//     }
+//   }
+// }());
 
 refillEachProductClicks();
-refillEachProductDisplays();
+// refillEachProductDisplays();
 
 // chart rendering below
 var data = {
