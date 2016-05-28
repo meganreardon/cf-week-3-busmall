@@ -36,7 +36,6 @@ var refillEachProductDisplays = (function() {
       }
     }
   }
-  // eachProductClicks = []; // empties out array to get ready to use
 }());
 
 function makeMyRandomNumber() {
@@ -76,14 +75,7 @@ randomImages();
 theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
-  if (userClicksTotal === 5) {
-  // if (userClicksTotal === 24) {
-    theContainer.removeEventListener('click', handleContainer);
-    console.log('about to draw chart, eachProductClicks is at: ' + eachProductClicks);
-    drawChart();
-    console.log('after drawing chart, eachProductClicks is at: ' + eachProductClicks);
-
-  } else if (event.target.id === 'thecontainer') {
+  if (event.target.id === 'thecontainer') {
   } else {
     userClicksTotal++;
     var thisid = parseInt(event.target.id);
@@ -92,6 +84,10 @@ function handleContainer(event) {
     fillEachProductClicks(); // fills the timesClicked array used for the chart
     timesClickedToLS(); // moves the timesClicked array into local storage
     randomImages();
+  }
+  if (userClicksTotal === 24) {
+    theContainer.removeEventListener('click', handleContainer);
+    drawChart();
   }
 }
 
