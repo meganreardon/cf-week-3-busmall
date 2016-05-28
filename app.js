@@ -75,18 +75,19 @@ randomImages();
 theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
-  if (userClicksTotal === 24) {
-    theContainer.removeEventListener('click', handleContainer);
-    drawChart();
-  } else if (event.target.id === 'thecontainer') {
+  if (event.target.id === 'thecontainer') {
   } else {
     userClicksTotal++;
     var thisid = parseInt(event.target.id);
+    eachProductClicks = []; // empties out array after I've filled what needs to be filled
     theProducts[thisid].timesClicked ++;
     fillEachProductClicks(); // fills the timesClicked array used for the chart
     timesClickedToLS(); // moves the timesClicked array into local storage
     randomImages();
-    eachProductClicks = []; // empties out array after I've filled what needs to be filled
+  }
+  if (userClicksTotal === 24) {
+    theContainer.removeEventListener('click', handleContainer);
+    drawChart();
   }
 }
 
@@ -142,15 +143,18 @@ var data = {
   labels: theImageNames,
   datasets: [
     {
+      // data: eachProductClicks,
       label: 'Times each product was clicked.',
       backgroundColor: '#999999',
-      hoverBackgroundColor: '#ff6600',
-      data: eachProductClicks,
+      hoverBackgroundColor: '#ff6600', // this was orig
+      data: eachProductClicks, // this was orig w/ comma
     }
   ]
 };
 
 function drawChart() {
+  console.log(data);
+  data.datasets[0].data = eachProductClicks;
   var forMarketing = document.getElementById('theresults').getContext('2d');
   clicksResultsChart = new Chart(forMarketing,{
     type: 'bar',
