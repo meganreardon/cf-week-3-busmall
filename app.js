@@ -36,6 +36,7 @@ var refillEachProductDisplays = (function() {
       }
     }
   }
+  // eachProductClicks = []; // empties out array to get ready to use
 }());
 
 function makeMyRandomNumber() {
@@ -78,17 +79,18 @@ function handleContainer(event) {
   if (userClicksTotal === 4) {
   // if (userClicksTotal === 24) {
     theContainer.removeEventListener('click', handleContainer);
+    console.log('about to draw chart, eachProductClicks is at: ' + eachProductClicks);
     drawChart();
   } else if (event.target.id === 'thecontainer') {
   } else {
     userClicksTotal++;
     var thisid = parseInt(event.target.id);
+    eachProductClicks = []; // empties out array after I've filled what needs to be filled
     theProducts[thisid].timesClicked ++;
     fillEachProductClicks(); // fills the timesClicked array used for the chart
     timesClickedToLS(); // moves the timesClicked array into local storage
     randomImages();
   }
-  eachProductClicks = []; // empties out array after I've filled what needs to be filled
 }
 
 // pushes the clicks/displays per product into array for the chart/local storage
