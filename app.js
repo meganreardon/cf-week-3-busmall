@@ -81,6 +81,8 @@ function handleContainer(event) {
     theContainer.removeEventListener('click', handleContainer);
     console.log('about to draw chart, eachProductClicks is at: ' + eachProductClicks);
     drawChart();
+    console.log('after drawing chart, eachProductClicks is at: ' + eachProductClicks);
+
   } else if (event.target.id === 'thecontainer') {
   } else {
     userClicksTotal++;
@@ -145,12 +147,11 @@ var data = {
   labels: theImageNames,
   datasets: [
     {
-      data: eachProductClicks,
+      // data: eachProductClicks,
       label: 'Times each product was clicked.',
       backgroundColor: '#999999',
-      // hoverBackgroundColor: '#ff6600', // this was orig
-      hoverBackgroundColor: '#ff6600'
-      // data: eachProductClicks, // this was orig w/ comma
+      hoverBackgroundColor: '#ff6600', // this was orig
+      data: eachProductClicks, // this was orig w/ comma
     }
   ]
 };
