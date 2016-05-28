@@ -75,7 +75,8 @@ randomImages();
 theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
-  if (userClicksTotal === 24) {
+  if (userClicksTotal === 4) {
+  // if (userClicksTotal === 24) {
     theContainer.removeEventListener('click', handleContainer);
     drawChart();
   } else if (event.target.id === 'thecontainer') {
@@ -86,8 +87,8 @@ function handleContainer(event) {
     fillEachProductClicks(); // fills the timesClicked array used for the chart
     timesClickedToLS(); // moves the timesClicked array into local storage
     randomImages();
-    eachProductClicks = []; // empties out array after I've filled what needs to be filled
   }
+  eachProductClicks = []; // empties out array after I've filled what needs to be filled
 }
 
 // pushes the clicks/displays per product into array for the chart/local storage
