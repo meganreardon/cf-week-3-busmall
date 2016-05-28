@@ -76,7 +76,7 @@ randomImages();
 theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
-  if (userClicksTotal >= 24) {
+  if (userClicksTotal === 5) {
   // if (userClicksTotal === 24) {
     theContainer.removeEventListener('click', handleContainer);
     console.log('about to draw chart, eachProductClicks is at: ' + eachProductClicks);
@@ -157,6 +157,8 @@ var data = {
 };
 
 function drawChart() {
+  console.log(data);
+  data.datasets[0].data = eachProductClicks;
   var forMarketing = document.getElementById('theresults').getContext('2d');
   clicksResultsChart = new Chart(forMarketing,{
     type: 'bar',
