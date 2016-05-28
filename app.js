@@ -76,7 +76,7 @@ randomImages();
 theContainer.addEventListener('click', handleContainer);
 
 function handleContainer(event) {
-  if (userClicksTotal === 4) {
+  if (userClicksTotal >= 24) {
   // if (userClicksTotal === 24) {
     theContainer.removeEventListener('click', handleContainer);
     console.log('about to draw chart, eachProductClicks is at: ' + eachProductClicks);
@@ -145,10 +145,12 @@ var data = {
   labels: theImageNames,
   datasets: [
     {
+      data: eachProductClicks,
       label: 'Times each product was clicked.',
       backgroundColor: '#999999',
-      hoverBackgroundColor: '#ff6600',
-      data: eachProductClicks,
+      // hoverBackgroundColor: '#ff6600', // this was orig
+      hoverBackgroundColor: '#ff6600'
+      // data: eachProductClicks, // this was orig w/ comma
     }
   ]
 };
